@@ -3,48 +3,9 @@ spring:
     name: api-gateway
 
   config:
-    import: "configserver:http://localhost:9000"
+    #    fail-fast
+    import: "configserver:"
 
   cloud:
-    gateway:
-      server:
-        webflux:
-          routes:
-            - id: student-service
-              uri: lb://STUDENT-SERVICE
-              predicates:
-                - Path=/api/v1/students
-            - id: student-service-wildcard
-              uri: lb://STUDENT-SERVICE
-              predicates:
-                - Path=/api/v1/students/**
-            - id: program-service
-              uri: lb://PROGRAM-SERVICE
-              predicates:
-                - Path=/api/v1/programs
-            - id: program-service-wildcard
-              uri: lb://PROGRAM-SERVICE
-              predicates:
-                - Path=/api/v1/programs/**
-            - id: enrollment-service
-              uri: lb://ENROLLMENT-SERVICE
-              predicates:
-                - Path=/api/v1/enrollments
-            - id: enrollment-service-wildcard
-              uri: lb://ENROLLMENT-SERVICE
-              predicates:
-                - Path=/api/v1/enrollments/**
-          globalcors:
-            corsConfigurations:
-              '[/**]':
-                allowedOrigins: "*"
-                allowedMethods: "*"
-                allowedHeaders: "*"
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
-server:
-  port: 7000
+    config:
+      uri: http://localhost:9000
